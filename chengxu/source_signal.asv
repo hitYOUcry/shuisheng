@@ -57,6 +57,6 @@ ss = [s1;s2];
 x = A * ss + Nn;
 figure;
 plot(real(x(1,:)));
-title('阵元一');
+title('');
 xlabel('采样点');
 ylabel('幅值');
