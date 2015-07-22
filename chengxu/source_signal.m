@@ -1,16 +1,17 @@
 %% 信号源仿真 %%
 clc;
+clear;
 close all;
 
 
 L = 50; % 快拍数
-M = 8; % 阵元数
+M = 100; % 阵元数
 k = 2; % 信源数
-SNR = 5; % 信噪比
+SNR = 10; % 信噪比
 d = 0.5; %
 t = 0:L-1;
 K = sqrt(2*10^(SNR/10)); % 信号幅度
-the0 = [40 42];
+the0 = [50 52];
 the1 = the0(1) * pi /180;
 the2 = the0(2) * pi /180;
 
@@ -57,7 +58,7 @@ ss = [s1;s2];
 x = A * ss + Nn;
 figure;
 plot(real(x(1,:)));
-title('阵元一');
+title('阵元一接收信号');
 xlabel('采样点');
 ylabel('幅值');
 
@@ -70,8 +71,8 @@ for i1 = 1:N
     P_cbf3(i1) = a_theta1' * R3 * a_theta1 / (a_theta1' * a_theta1);
 end
 figure;
-plot(theta1,10 * log10(P_cbf3));
-title('CBF alogrithm');
+plot(theta1,10 * log10(abs(P_cbf3)));
+title(strcat('CBF 算法','    阵元数M=',num2str(M)));
 xlabel('入射角度');
 ylabel('空间方位谱(dB)');
 grid on;
@@ -81,8 +82,8 @@ grid on;
 mr3 = fliplr(r3);
 mr3 = fliplr(mr3);
 mp3 = fliplr(p3);
-Us3(:,[1,2]) = mp3(:,[1,2]);
-Un3(:,[1,2,3,4,5,6]) = mp3(:,[3,4,5,6,7,8]);
+Us3(:,1:2) = mp3(:,1:2);
+Un3(:,:) = mp3(:,3:M);
 theta3 = 0:0.1:90;
 N = length(theta3);
 for i3 = 1:N
@@ -91,7 +92,7 @@ for i3 = 1:N
 end
 figure;
 plot(theta3,10 * log10(P_music3));
-title('MUSIC 算法');
+title(strcat('MUSIC 算法','    阵元数M=',num2str(M)));
 xlabel('入射角度(deg)');
-ylabel('空间方位角(dB)');
+ylabel('空间方位谱(dB)');
 
