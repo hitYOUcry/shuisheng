@@ -10,7 +10,7 @@ SNR = 5; % 信噪比
 d = 0.5; %
 t = 0:L-1;
 K = sqrt(2*10^(SNR/10)); % 信号幅度
-the0 = [40 45];
+the0 = [40 42];
 the1 = the0(1) * pi /180;
 the2 = the0(2) * pi /180;
 
@@ -60,3 +60,38 @@ plot(real(x(1,:)));
 title('阵元一');
 xlabel('采样点');
 ylabel('幅值');
+
+%% CBF
+R3 = x * x' / L;
+theta1 = 0:0.1:90;
+N = length(theta1);
+for i1 = 1:N
+    a_theta1 = exp(-1i * 2 * pi * d * m' * sin(pi * theta1(i1)/180));
+    P_cbf3(i1) = a_theta1' * R3 * a_theta1 / (a_theta1' * a_theta1);
+end
+figure;
+plot(theta1,10 * log10(P_cbf3));
+title('CBF alogrithm');
+xlabel('入射角度');
+ylabel('空间方位谱(dB)');
+grid on;
+
+%% MUSIC 
+[p3, r3] = eig(R3);
+mr3 = fliplr(r3);
+mr3 = fliplr(mr3);
+mp3 = fliplr(p3);
+Us3(:,[1,2]) = mp3(:,[1,2]);
+Un3(:,[1,2,3,4,5,6]) = mp3(:,[3,4,5,6,7,8]);
+theta3 = 0:0.1:90;
+N = length(theta3);
+for i3 = 1:N
+    a_theta3 = exp(-1i * 2 * pi * d * m' * sin(theta3(i3) / 180 * pi));
+    P_music3(i3) = abs((a_theta3' * a_theta3)/(a_theta3' * Un3 * Un3' * a_theta3));
+end
+figure;
+plot(theta3,10 * log10(P_music3));
+title('MUSIC 算法');
+xlabel('入射角度(deg)');
+ylabel('空间方位角(dB)');
+
