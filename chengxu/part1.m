@@ -1,4 +1,4 @@
-%% 信号源仿真 %%
+%% 信源 噪声 阵元接收信号 方位估计 %%
 clc;
 clear;
 close all;
@@ -15,7 +15,7 @@ the0 = [50 52];
 the1 = the0(1) * pi /180;
 the2 = the0(2) * pi /180;
 
-%% 产生源信0号
+%% 信源
 w = [pi/8,pi/6]; % frequency
 fai1 = unidrnd(360,1,L)*pi/180;
 fai2 = unidrnd(360,1,L)*pi/180;
