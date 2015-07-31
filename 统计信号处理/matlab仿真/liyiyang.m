@@ -8,7 +8,7 @@ clc;
 %% 变量定义
 N = 50; 
 % 阵元数目
-M = 12; 
+M = 100; 
 %信号源数目
 k = 2;
 % 信噪比
@@ -16,7 +16,7 @@ SNR = 5;
 % 信号幅度
 Amp = sqrt(2*10^(SNR/10));
 %入射角
-IncAngle = [25 55];
+IncAngle = [48 50];
 IncAngle1 = IncAngle(1) * pi /180;
 IncAngle2 = IncAngle(2) * pi /180;
 %信号源频率
